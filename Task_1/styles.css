@@ -1,0 +1,114 @@
+.container {
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    object-fit: cover;
+    border: 3px solid lightblue;
+    height: 138px;
+    width: 457px;
+    margin: 4px;
+  }
+
+
+  .outer-container{
+    justify-content: center;
+    align-items: center;
+    display: flex;
+  }  
+  
+  h1{
+    justify-content: center;
+    align-items: center;
+    display: flex;
+  }
+
+  .content-box {
+    display: flex;
+    object-fit: cover;
+    height: 132px;
+    width: 450px;
+  }
+  
+.profile-pic {
+    width: 130px;
+    height: 130px;
+    object-fit: cover;
+    border: 2px solid red; 
+  }
+  
+  .text-content {
+    margin-left: 14px;
+    text-align:left;
+  }
+  
+  .bio {
+    font-family: 'Roboto', sans-serif;
+    font-size: 20px;
+    margin-top: 14px;
+    margin-left: 14px;
+  }
+  
+  .username {
+    font-family: 'Roboto', sans-serif;
+    font-size: 20px;
+    color: black;
+    margin-left: 14px;
+    font-weight: bold;
+    margin-top: 20px;
+  }
+
+
+  .icons .fa-comment {
+    font-size: 20px;
+    margin-right: 14px;
+    margin-left: 14px;
+    margin-top: 24px;
+    margin-bottom: 4px;
+  }
+
+  .icons .fa-comment::after {
+    content: "242";
+    font-family: "Roboto", sans-serif; 
+    font-size: 15px; 
+    color: #858991;
+    margin-left: 14px;
+    margin-top: 24px;
+    margin-bottom: 4px;
+     
+}
+
+.icons .fa-retweet {
+  font-size: 20px;
+  margin-bottom: 4px;
+  margin-top: 24px;
+}
+
+.icons .fa-retweet::after {
+  content: "142";
+  font-family: "Roboto", sans-serif; 
+  font-size: 15px;
+  color: #858991;
+  margin-left: 14px;
+  margin-top: 24px;
+  margin-bottom: 4px;
+   
+}
+
+
+.icons .fa-heart {
+  font-size: 20px;
+  margin-top: 24px;
+  margin-bottom: 4px;
+  margin-left: 24px;
+}
+
+.icons .fa-heart::after {
+  content: "2.6K";
+  font-family: "Roboto", sans-serif; 
+  font-size: 15px; 
+  color: #858991;
+  margin-left: 14px;
+  margin-top: 24px;
+  margin-bottom: 4px;
+   
+}
