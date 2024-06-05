@@ -1,6 +1,6 @@
 
 function validateform() {
-    var name = document.getElementById("yourname").value.trim();
+    var name = document.getElementById("yourname and surname").value.trim();
     var comments = document.getElementById("yourcomments").value.trim();
     var male = document.getElementById("male");
     var female = document.getElementById("female");
