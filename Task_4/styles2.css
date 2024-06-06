@@ -1,0 +1,117 @@
+body {
+    font-family: 'Open Sans', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #e9e9e9;
+}
+header {
+    background-image: url('icons/header_img.png');
+    padding: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-position: left;
+    position: relative;
+    border-bottom: 4px solid transparent; /* Transparent border initially */
+}
+
+.mainlogo {
+    display: flex;
+    align-items: center;
+}
+
+.mainlogo img {
+    max-width: 150px;
+    margin-right: auto;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+}
+
+.g-link {
+    color: rgb(83, 233, 83);
+    text-decoration: none;
+    margin: 0 10px;
+    position: relative;
+    padding-bottom: 4px; /* Add padding for the bottom border */
+}
+
+.g-link:hover,
+.g-link:focus {
+    color: white;
+}
+
+.g-link.active {
+    color: white;
+}
+
+.g-link.active::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 4px;
+    background-color: white;
+    border: none; /* Remove default border */
+}
+
+.g-link,
+.header-link {
+    margin-right: 20px; /* Adjust the margin-right value to your preference */
+}
+
+
+.header-icon {
+    width: 24px;
+    height: auto;
+    margin-left: 10px;
+}
+
+.foot {
+    display: flex;
+    justify-content: center; 
+    margin-top: 20px; 
+}
+
+.foot a {
+    color: green; 
+    text-decoration: none; 
+    margin: 0 10px; 
+}
+
+.foot p {
+    color: green; 
+    margin: 0; 
+}
+
+.green-link:hover {
+    text-decoration: underline; 
+}
+
+
+
+.footer {
+    background-color: #b4b1b1;
+    padding: 10px 0; 
+    text-align: center;
+    color: black; 
+}
+
+.footer-content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.footer img {
+    width: 100px;
+    height: auto; 
+    margin-right: 10px; 
+}
+
+.footer p {
+    margin: 0;
+}
