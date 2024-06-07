@@ -26,16 +26,16 @@ header {
 }
 
 .logo {
-    display: flex;
+    
     align-items: center;
 }
 
 .g-link {
-    color: rgb(83, 233, 83);
-    text-decoration: none;
+    color: #55e0a3;
+    text-decoration: dashed;
     margin: 0 10px;
     position: relative;
-    padding-bottom: 4px; /* Add padding for the bottom border */
+    padding-bottom: 20px;
 }
 
 .g-link:hover,
@@ -47,6 +47,8 @@ header {
     color: white;
 }
 
+
+/*bottom navigator*/
 .g-link.active::after {
     content: '';
     position: absolute;
@@ -55,14 +57,8 @@ header {
     width: 100%;
     height: 4px;
     background-color: white;
-    border: none; /* Remove default border */
+    border: none; 
 }
-
-.g-link,
-.header-link {
-    margin-right: 20px; /* Adjust the margin-right value to your preference */
-}
-
 
 .header-icon {
     width: 24px;
@@ -114,4 +110,156 @@ header {
 
 .footer p {
     margin: 0;
+}
+
+
+.SubHeading {
+    background-color:#55e0a3;
+    margin-top: 40px;
+    width: 95%;
+    height: 70px;
+    margin-left: auto;
+    margin-right: auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    position: relative;
+}
+
+.subheader-link {
+    text-decoration: none;
+    color: black;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex: 1;
+    height: 100%;
+    position: relative;
+}
+
+.subheader-link p {
+    margin: 0;
+    font-size: 16px;
+}
+
+.active-indicator {
+    position: absolute;
+    bottom: 0;
+    width: 50%;
+    height: 5px;
+    background-color: black;
+    transition: left 0.3s;
+}
+
+#courses-indicator {
+    left: 0;
+}
+
+#classes-indicator {
+    left: 50%;
+}
+
+
+.container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 95%;
+    margin: 20px auto;
+    padding-bottom: 20px;
+    border-bottom: 1px solid gray;
+    font-size: small;
+    color: gray;
+}
+
+.left-text {
+    margin: 0;
+}
+
+.dropdown-container {
+    display: flex;
+    align-items: center;
+}
+
+.dropdown {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.dropdown select {
+    padding: 5px;
+    font-size: 14px;
+    border: none;
+    border-bottom: 1px solid gray;
+    background: transparent; /* Ensure the background is transparent */
+    outline: none; /* Remove default focus outline */
+    -webkit-appearance: none; /* Remove default arrow in Safari */
+    -moz-appearance: none; /* Remove default arrow in Firefox */
+    appearance: none; /* Remove default arrow in other browsers */
+}
+
+.dropdown .arrow-icon {
+    position: absolute;
+    right: -20px; /* Move the arrow to the right */
+    pointer-events: none; /* Ignore mouse events */
+    width: 16px;
+    height: 16px;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.dropdown::after {
+    content: "";
+    display: block;
+    width: 0;
+    height: 0;
+    position: absolute;
+    pointer-events: none;
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    border-top: 5px solid #000;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+
+.course-container {
+    width: 95%;
+    margin: 20px auto;
+    padding-bottom: 20px;
+    border-bottom: 1px solid gray;
+}
+
+.course {
+    display: flex;
+    align-items: center;
+    padding: 10px 0;
+}
+
+.course img {
+    width: 30%;
+    height: auto;
+    object-fit: cover;
+}
+
+.course-content {
+    width: 70%;
+    padding-left: 20px;
+}
+
+.course-content p {
+    margin: 5px 0;
+}
+
+.course-icons {
+    display: flex;
+    justify-content: space-evenly;
+    padding-top: 10px;
+}
+
+.course-icons img {
+    width: 24px;
+    height: 24px;
 }
