@@ -19,15 +19,30 @@
             <a href="#" class="g-link">USERS&nbsp;&nbsp;</a>
             <a href="#" class="g-link">REPORTS&nbsp;&nbsp;</a>
             <a href="#" class="g-link">ADMIN</a>
-            <a href="link_to_alerts_page" class="g-link">
+            <a href="link_to_alerts_page" class="g-link t-link">
                 <img src="icons/alerts.svg" alt="alerts" class="header-icon">
+                <span class="notification-number">3</span>
             </a>
-            <a href="link_to_announcements_page" class="g-link">
+            <a href="link_to_announcements_page" class="g-link t-link">
                 <img src="icons/announcements.svg" alt="announcements" class="header-icon">
+                <span class="notification-number">1</span>
             </a>
-            <a href="link_to_account_page" class="g-link">
+            <a href="link_to_account_page" class="g-link t-link">
                 <img src="icons/account_circle.svg" alt="account_circle" class="header-icon">
+                <span class="account-number">T</span>
             </a>
+            <div class="dropdown-content" id="dropdownContent">
+                <a href="#" class="g-link">DASHBOARD&nbsp;&nbsp;</a>
+                <a href="#" class="g-link">CONTENT&nbsp;&nbsp;</a>
+                <a href="#" class="g-link">USERS&nbsp;&nbsp;</a>
+                <a href="#" class="g-link">REPORTS&nbsp;&nbsp;</a>
+                <a href="#" class="g-link">ADMIN</a>
+            </div>
+            <div class="menu-icon" onclick="toggleDropdown()">
+                <a href="#" id="h-i">
+                    <img src="icons/hamburger-menu.svg" alt="menu">
+                </a>
+            </div>
         </div>
         
     </header>
@@ -58,79 +73,256 @@
             </div>
         </div>
     </div>
-    
-    <div class="course-container">
-        <div class="course">
-            <img src="icons/imageMask.png" alt="Course 1 Image">
-            <div class="course-content">
-                <p>Acceleration</p>
-                <p>Instructor Name</p>
-                <p>Course Duration</p>
-                <p>Course Description</p>
+
+
+     <div class="cards">
+        <div class="box">
+            <div class="flexbox">
+                <img src="icons/imageMask.png" alt="" class="cover">
+                
+                <div class="info">
+                    <div class="header2">
+                        <div class="m1">Acceleration</div>
+                        <img src="icons/favourite.svg" alt="Favourite" class="star">
+                    </div>
+                    
+                    <div class="m2">
+                        <div class="e1">
+                            Physics
+                        </div>
+                        <div class="e2">
+                            Grade 7
+                            <div class="green">+2</div>
+                        </div>
+                    </div>
+                    <div class="m2">
+                        <div class="e3">
+                            <strong>4</strong>
+                            Units
+                        </div>
+                        <div class="e3">
+                            <strong>18</strong>
+                            Lessons
+                        </div>
+                        <div class="e3">
+                            <strong>24</strong>
+                            Topics
+                        </div>
+                    </div>
+                    <div class="m2">
+                        <select name="cars" id="cars" class="dropdown2">
+                            <option value="volvo">Mr. Frank's Class B</option>
+                            <option value="saab">option_2</option>
+                        </select>
+                    </div>
+                    <div class="m2">
+                        <div class="e1">
+                            50 Students
+                        </div>
+                        <div class="e2">
+                            21-Jan-2020 - 21-Aug-2020
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="other">
+                <div>
+                    <img src="icons/preview.svg" alt="">
+                </div>
+                <div>
+                    <img src="icons/manage course.svg" alt="">
+                </div>
+                <div>
+                    <img src="icons/grade submissions.svg" alt="">
+                </div>
+                <div>
+                    <img src="icons/reports.svg" alt="">
+                </div>
             </div>
         </div>
-        <div class="course-icons">
-            <img src="icons/preview.svg" alt="Icon 1">
-            <img src="icons/manage course.svg" alt="Icon 2">
-            <img src="icons/grade submissions.svg" alt="Icon 3">
-            <img src="icons/reports.svg" alt="Icon 4">
-        </div>
-    </div>
 
-    <div class="course-container">
-        <div class="course">
-            <img src="icons/imageMask-1.png" alt="Course 2 Image">
-            <div class="course-content">
-                <p>Course Title 2</p>
-                <p>Instructor Name</p>
-                <p>Course Duration</p>
-                <p>Course Description</p>
+
+
+
+        <div class="box">
+            <div class="flexbox">
+                <img src="icons/imageMask-1.png" alt="" class="cover">
+                
+                <div class="info">
+                    <div class="header2">
+                        <div class="m1">Displacement, Velocity and Speed</div>
+                        <img src="icons/favourite.svg" alt="Favourite" class="star">
+                    </div>
+                    
+                    <div class="m2">
+                        <div class="e1">
+                            Physics 2
+                        </div>
+                        <div class="e2">
+                            Grade 6
+                            <div class="green">+3</div>
+                        </div>
+                    </div>
+                    <div class="m2">
+                        <div class="e3">
+                            <strong>2</strong>
+                            Units
+                        </div>
+                        <div class="e3">
+                            <strong>15</strong>
+                            Lessons
+                        </div>
+                        <div class="e3">
+                            <strong>20</strong>
+                            Topics
+                        </div>
+                    </div>
+                    <div class="m2">
+                        <select name="cars" id="cars" class="dropdown2">
+                            <option value="" disabled >No Classes</option>
+                        </select>
+                    </div>
+                    
+            
+                </div>
+            </div>
+            <div class="other">
+                <div>
+                    <img src="icons/preview.svg" alt="">
+                </div>
+                <div>
+                    <img src="icons/manage course.svg" alt="" class="op">
+                </div>
+                <div>
+                    <img src="icons/grade submissions.svg" alt=""  class="op">
+                </div>
+                <div>
+                    <img src="icons/reports.svg" alt="">
+                </div>
             </div>
         </div>
-        <div class="course-icons">
-            <img src="icons/preview.svg" alt="Icon 1">
-            <img src="icons/manage course.svg" alt="Icon 2">
-            <img src="icons/grade submissions.svg" alt="Icon 3">
-            <img src="icons/reports.svg" alt="Icon 4">
-        </div>
-    </div>
 
-    <div class="course-container">
-        <div class="course">
-            <img src="icons/imageMask-2.png" alt="Course 3 Image">
-            <div class="course-content">
-                <p>Course Title 3</p>
-                <p>Instructor Name</p>
-                <p>Course Duration</p>
-                <p>Course Description</p>
+
+
+        <div class="box">
+            <div class="flexbox">
+                <img src="icons/imageMask-3.png" alt="" class="cover">
+                
+                <div class="info">
+                    <div class="header2">
+                        <div class="m1">Introduction to Biology: Micro Organisms and how they affect the other Life Systems in En</div>
+                        <img src="icons/favourite.svg" alt="Favourite" class="star">
+                    </div>
+                    
+                    <div class="m2">
+                        <div class="e1">
+                            Biology
+                        </div>
+                        <div class="e2">
+                            Grade 4
+                            <div class="green">+1</div>
+                        </div>
+                    </div>
+                    <div class="m2">
+                        <div class="e3">
+                            <strong>5</strong>
+                            Units
+                        </div>
+                        <div class="e3">
+                            <strong>16</strong>
+                            Lessons
+                        </div>
+                        <div class="e3">
+                            <strong>22</strong>
+                            Topics
+                        </div>
+                    </div>
+                    <div class="m2">
+                        <select name="cars" id="cars" class="dropdown2">
+                            <option value="volvo">All Classes</option>
+                            <option value="saab">option_2</option>
+                        </select>
+                    </div>
+                    <div class="m2">
+                        <div class="e1">
+                            300 Students
+                        </div>
+                        
+                    </div>
+                </div>
+            </div>
+            <div class="other">
+                <div>
+                    <img src="icons/preview.svg" alt="">
+                </div>
+                <div>
+                    <img src="icons/manage course.svg" alt="" class="op">
+                </div>
+                <div>
+                    <img src="icons/grade submissions.svg" alt="" class="op">
+                </div>
+                <div>
+                    <img src="icons/reports.svg" alt="">
+                </div>
             </div>
         </div>
-        <div class="course-icons">
-            <img src="icons/preview.svg" alt="Icon 1">
-            <img src="icons/manage course.svg" alt="Icon 2">
-            <img src="icons/grade submissions.svg" alt="Icon 3">
-            <img src="icons/reports.svg" alt="Icon 4">
-        </div>
-    </div>
 
-    <div class="course-container">
-        <div class="course">
-            <img src="icons/imageMask-3.png" alt="Course 4 Image">
-            <div class="course-content">
-                <p>Course Title 4</p>
-                <p>Instructor Name</p>
-                <p>Course Duration</p>
-                <p>Course Description</p>
+
+        <div class="box">
+            <div class="flexbox">
+                <img src="icons/imageMask-2.png" alt="" class="cover">
+                
+                <div class="info">
+                    <div class="header2">
+                        <div class="m1">Introduction to High School Mathematics</div>
+                        <img src="icons/favourite.svg" alt="Favourite" class="star gray">
+                    </div>
+                    
+                    
+                    <div class="m2">
+                        <div class="e1">
+                            Mathematics 
+                        </div>
+                        <div class="e2">
+                            Grade 8
+                            <div class="green">+3</div>
+                        </div>
+                    </div>
+                    
+                    <div class="m2">
+                        <select name="cars" id="cars" class="dropdown2">
+                            <option value="volvo">Mr. Frank's Class A</option>
+                            <option value="saab">option_2</option>
+                        </select>
+                    </div>
+                    <div class="m2">
+                        <div class="e1">
+                            44 Students
+                        </div>
+                        <div class="e2">
+                            14-Oct-2019 - 20-Oct-2020
+                        </div>
+                    </div>
+                </div>
+        
+            </div>
+            <div class="other">
+                <div>
+                    <img src="icons/preview.svg" alt="">
+                </div>
+                <div>
+                    <img src="icons/manage course.svg" alt="">
+                </div>
+                <div>
+                    <img src="icons/grade submissions.svg" alt="">
+                </div>
+                <div>
+                    <img src="icons/reports.svg" alt="">
+                </div>
             </div>
         </div>
-        <div class="course-icons">
-            <img src="icons/preview.svg" alt="Icon 1">
-            <img src="icons/manage course.svg" alt="Icon 2">
-            <img src="icons/grade submissions.svg" alt="Icon 3">
-            <img src="icons/reports.svg" alt="Icon 4">
-        </div>
-    </div>
 
+    </div>
 
     <br>
     <br>

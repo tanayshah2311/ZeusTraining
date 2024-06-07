@@ -1,13 +1,10 @@
 document.addEventListener('DOMContentLoaded', function() {
     document.querySelectorAll('#header-links .g-link').forEach(link => {
         link.addEventListener('click', function(event) {
-            // Prevent default behavior if necessary
             event.preventDefault();
 
-            // Remove active class from all links
             document.querySelectorAll('#header-links .g-link').forEach(link => link.classList.remove('active'));
 
-            // Add active class to the clicked link
             event.currentTarget.classList.add('active');
         });
     });
@@ -33,3 +30,13 @@ document.addEventListener("DOMContentLoaded", function() {
         indicator.id = 'classes-indicator';
     });
 });
+
+
+function toggleDropdown() {
+    var dropdown = document.getElementById("dropdownContent");
+    if (dropdown.style.display === "none" || dropdown.style.display === "") {
+        dropdown.style.display = "block";
+    } else {
+        dropdown.style.display = "none";
+    }
+}

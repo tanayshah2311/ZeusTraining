@@ -12,8 +12,29 @@ header {
     align-items: center;
     background-position: left;
     position: relative;
-    border-bottom: 4px solid transparent; /* Transparent border initially */
+    border-bottom: 4px solid transparent; 
 }
+
+.menu-icon {
+    display: none; 
+}
+
+@media (max-width: 849px)
+{
+    .menu-icon{
+        display: inline;
+        margin-left: 10px;
+    }
+    .g-link{
+        display: none;
+    }
+    .t-link{
+        display: inline;
+        
+    }
+   
+}
+
 
 .mainlogo {
     display: flex;
@@ -58,6 +79,7 @@ header {
     height: 4px;
     background-color: white;
     border: none; 
+    
 }
 
 .header-icon {
@@ -65,6 +87,48 @@ header {
     height: auto;
     margin-left: 10px;
 }
+
+.notification-number {
+    position: absolute;
+    bottom: 20;
+    right: 0;
+    background-color: rgb(27, 85, 247);
+    color: white;
+    border-radius: 50%;
+    padding: 2px 6px;
+    font-size: 10px;
+}
+
+.account-number {
+    position: absolute;
+    bottom: 20;
+    right: 0;
+    background-color: rgb(255, 255, 255);
+    color: rgb(0, 0, 0);
+    border-radius: 50%;
+    padding: 2px 6px;
+    font-size: 8px;
+}
+
+.dropdown-content {
+    display: none; 
+    position: absolute;
+    top: 100%; 
+    right: 0;
+    border: 2px solid white;
+    background-color: #55e0a3;
+    padding: 10px;
+    z-index: 1; 
+    margin-top: 5px;
+}
+
+.dropdown-content a {
+    display: inline; 
+    padding: 5px 10px;
+    color: #000; 
+   
+}
+
 
 .foot {
     display: flex;
@@ -148,7 +212,7 @@ header {
     width: 50%;
     height: 5px;
     background-color: black;
-    transition: left 0.3s;
+    transition: left 1s;
 }
 
 #courses-indicator {
@@ -191,18 +255,19 @@ header {
     padding: 5px;
     font-size: 14px;
     border: none;
+    margin-right: 20px;
     border-bottom: 1px solid gray;
-    background: transparent; /* Ensure the background is transparent */
-    outline: none; /* Remove default focus outline */
-    -webkit-appearance: none; /* Remove default arrow in Safari */
-    -moz-appearance: none; /* Remove default arrow in Firefox */
-    appearance: none; /* Remove default arrow in other browsers */
+    background: transparent; 
+    outline: none; 
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none; 
 }
 
 .dropdown .arrow-icon {
     position: absolute;
-    right: -20px; /* Move the arrow to the right */
-    pointer-events: none; /* Ignore mouse events */
+    right: -10px; 
+    pointer-events: none;
     width: 16px;
     height: 16px;
     top: 50%;
@@ -211,7 +276,7 @@ header {
 
 .dropdown::after {
     content: "";
-    display: block;
+    display:block;
     width: 0;
     height: 0;
     position: absolute;
@@ -224,42 +289,144 @@ header {
     transform: translateY(-50%);
 }
 
-
-.course-container {
-    width: 95%;
-    margin: 20px auto;
-    padding-bottom: 20px;
-    border-bottom: 1px solid gray;
-}
-
-.course {
+.cards {
     display: flex;
-    align-items: center;
-    padding: 10px 0;
+    flex-wrap: wrap;
+    justify-content: center;
+    padding: 20px;
 }
 
-.course img {
-    width: 30%;
+.box {
+    width: 500px;
+    margin: 10px;
+    border-radius: 3px;
+    background-color: #fff;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.flexbox {
+    display: flex;
+    padding: 20px;
+    min-height: 190px;
+}
+
+.cover {
+    width: 130px;
     height: auto;
-    object-fit: cover;
+    margin-right: 20px;
 }
 
-.course-content {
-    width: 70%;
-    padding-left: 20px;
-}
-
-.course-content p {
-    margin: 5px 0;
-}
-
-.course-icons {
+.info {
+    flex: 1;
     display: flex;
-    justify-content: space-evenly;
-    padding-top: 10px;
+    flex-direction: column;
 }
 
-.course-icons img {
+.header2 {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    
+}
+
+.m1 {
+    font-weight: bold;
+    font-size: 0.8em;
+    border: 2px solid transparent;
+    max-width: 280px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis; 
+    max-height: 78px;
+}
+
+
+.star {
     width: 24px;
     height: 24px;
+}
+
+.m2 {
+    margin-top: 10px;
+    color: gray;
+    display: flex;
+    font-weight: bold;
+}
+
+.dropdown2{
+    color: black;
+}
+
+.dropdown2 option[disabled][selected] {
+    color: gray;
+}
+.dropdown2:invalid {
+    color: gray;
+}
+
+.dropdown2 {
+    width: 90%;
+    height: 30px;
+    border: none;
+    border-bottom: 2px solid gray;
+    text-align: left;
+    font-size: 17px;
+}
+
+
+
+.e1 {
+    margin-right: 10px;
+    padding-right: 10px;
+    border-right: 1px solid gray;
+    font-size: normal;
+    font-weight: normal;
+}
+
+.e2 {
+    display: flex;
+    font-size: normal;
+    font-weight: normal;
+}
+
+.e3 {
+    color: black;
+    font-weight: normal;
+    padding-right: 10px;
+    margin-right: 10px;
+}
+
+.green {
+    color: green;
+    padding-left: 3px;
+}
+
+
+
+
+.other {
+
+    height: 40px;
+    margin-right: auto;
+    margin-left: auto;
+    border-top: 1px solid rgba(0, 0, 0, 0.2);
+    display: flex;
+    padding: 10px;
+    justify-content: space-around;
+}
+
+
+.other img.op{
+    opacity: 0.5;
+}
+
+.gray {
+    filter: grayscale(100%); 
+}
+.gray:hover {
+    filter: grayscale(100%) brightness(70%) drop-shadow(2px 2px 5px #000); 
+}
+
+.star:hover{
+    filter: grayscale(1%) brightness(90%) drop-shadow(2px 2px 5px #ecd981);
 }
