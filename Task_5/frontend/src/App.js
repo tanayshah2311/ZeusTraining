@@ -1,5 +1,5 @@
 import './App.css';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import ProgressBar from './ProgressBar';
 
@@ -8,12 +8,16 @@ function App() {
   const [uploadProgress, setUploadProgress] = useState(0);
   const [uploadedFileURL, setUploadedFileURL] = useState(null);
   const [error, setError] = useState(null);
+  const [parsedData, setParsedData] = useState(null);
+
+
 
   function handleChange(event) {
     setFile(event.target.files[0]);
     setUploadProgress(0);
     setUploadedFileURL(null);
     setError(null);
+    setParsedData(null);
   }
 
   function handleSubmit(event) {
@@ -23,7 +27,7 @@ function App() {
       return;
     }
 
-    const url = 'http://localhost:3000/uploadfile';
+    const url = `${process.env.REACT_APP_BACKEND_URL}/uploadfile`;
     const formData = new FormData();
     formData.append('file', file);
     formData.append('fileName', file.name);
@@ -36,18 +40,22 @@ function App() {
         const percentCompleted = Math.round((progressEvent.loaded * 100) / progressEvent.total);
         setUploadProgress(percentCompleted);
       },
+
+      
     };
 
     axios.post(url, formData, config)
       .then((response) => {
         console.log(response.data);
         setUploadedFileURL(response.data.fileUrl);
+        setParsedData(response.data.data);
       })
       .catch((error) => {
         console.error('Error uploading file: ', error);
         setError(error);
       });
   }
+
 
   return (
     <div className="App">
@@ -70,15 +78,18 @@ function App() {
         </form>
         <ProgressBar progress={uploadProgress} />
         {error && <p className="error-message">Error uploading file: {error.message}</p>}
-        {uploadedFileURL && (
+        {parsedData && (
           <div className="success-container">
-            <p className="success-message">File uploaded successfully!</p>
-            <img src={uploadedFileURL} alt="Uploaded content" className="uploaded-image" />
+            <p className="success-message">File uploaded and parsed successfully!</p>
+            <pre>{JSON.stringify(parsedData, null, 2)}</pre>
           </div>
         )}
-      </div>
-    </div>
-  );
+
+        
+        </div>
+        </div>
+);
 }
 
 export default App;
+
