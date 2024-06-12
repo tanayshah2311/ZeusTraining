@@ -10,7 +10,7 @@
     height: 100%;
     background-color: #4caf50;
     border-radius: 10px;
-    transition: width 1.0s ease;
+    transition: width 0.5s ease;
     display: flex;
     justify-content: center;
     align-items: center;

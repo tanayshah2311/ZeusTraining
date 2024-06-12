@@ -1,23 +1,14 @@
 import './App.css';
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import axios from 'axios';
-import ProgressBar from './ProgressBar';
 
 function App() {
   const [file, setFile] = useState(null);
-  const [uploadProgress, setUploadProgress] = useState(0);
-  const [uploadedFileURL, setUploadedFileURL] = useState(null);
   const [error, setError] = useState(null);
-  const [parsedData, setParsedData] = useState(null);
-
-
+  const [tableData, setTableData] = useState([]);
 
   function handleChange(event) {
     setFile(event.target.files[0]);
-    setUploadProgress(0);
-    setUploadedFileURL(null);
-    setError(null);
-    setParsedData(null);
   }
 
   function handleSubmit(event) {
@@ -27,35 +18,32 @@ function App() {
       return;
     }
 
-    const url = `${process.env.REACT_APP_BACKEND_URL}/uploadfile`;
     const formData = new FormData();
     formData.append('file', file);
-    formData.append('fileName', file.name);
 
-    const config = {
+    axios.post('http://localhost:4000/uploadfile', formData, {
       headers: {
         'Content-Type': 'multipart/form-data',
       },
-      onUploadProgress: function (progressEvent) {
-        const percentCompleted = Math.round((progressEvent.loaded * 100) / progressEvent.total);
-        setUploadProgress(percentCompleted);
-      },
-
-      
-    };
-
-    axios.post(url, formData, config)
+    })
       .then((response) => {
-        console.log(response.data);
-        setUploadedFileURL(response.data.fileUrl);
-        setParsedData(response.data.data);
+        alert(response.data.message); 
+        fetchTableData(); // Fetch table data after upload
       })
       .catch((error) => {
         console.error('Error uploading file: ', error);
-        setError(error);
+        setError(error.message); // Set error state for display
       });
   }
 
+  const fetchTableData = async () => {
+    try {
+      const response = await axios.get('http://localhost:4000/tabledata/user');
+      setTableData(response.data);
+    } catch (error) {
+      console.error('Error fetching table data:', error);
+    }
+  };
 
   return (
     <div className="App">
@@ -76,20 +64,36 @@ function App() {
           </div>
           <button type="submit" className="upload-btn">Upload</button>
         </form>
-        <ProgressBar progress={uploadProgress} />
-        {error && <p className="error-message">Error uploading file: {error.message}</p>}
-        {parsedData && (
-          <div className="success-container">
-            <p className="success-message">File uploaded and parsed successfully!</p>
-            <pre>{JSON.stringify(parsedData, null, 2)}</pre>
+        
+        {error && <p className="error-message">Error uploading file: {error}</p>}
+        {tableData.length > 0 && (
+          <div className="table-container">
+            <h2>Uploaded Data</h2>
+            <table className="data-table">
+              <thead>
+                <tr>
+                  {Object.keys(tableData[0]).map((key) => (
+                    <th key={key}>{key}</th>
+                  ))}
+                </tr>
+              </thead>
+              <tbody>
+                {tableData.map((row, index) => (
+                  <tr key={index}>
+                    {Object.values(row).map((value, i) => (
+                      <td key={i}>{value}</td>
+                    ))}
+                  </tr>
+                ))}
+              </tbody>
+            </table>
           </div>
         )}
-
         
-        </div>
-        </div>
-);
+      </div>
+      
+    </div>
+  );
 }
 
 export default App;
-

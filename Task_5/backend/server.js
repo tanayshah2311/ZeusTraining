@@ -43,31 +43,35 @@ app.post('/uploadfile', upload.single('file'), async (req, res) => {
       csvStream.pipe(parser);
     });
 
-    const headers = parsedData[0];
-    const tableName = 'csvdata_' + Date.now();
-    const createTableQuery = `CREATE TABLE ${tableName} (${headers.map(header => `\`${header}\` VARCHAR(255)`).join(', ')});`;
+    const uniqueData = parsedData.slice(1).map(row => [row[0], row[1], row[2]]);
+    const updateQuery = `INSERT INTO user (Name, Email, Contact) VALUES ? 
+                         ON DUPLICATE KEY UPDATE Name=VALUES(Name), Contact=VALUES(Contact)`;
+    await db.promise().query(updateQuery, [uniqueData]);
 
-    await db.promise().query(createTableQuery);
-
-    const batchSize = 1000;
-    for (let i = 1; i < parsedData.length; i += batchSize) {
-      const batch = parsedData.slice(i, i + batchSize);
-      const insertQuery = `INSERT INTO ${tableName} (${headers.map(header => `\`${header}\``).join(', ')}) VALUES ?`;
-      await db.promise().query(insertQuery, [batch]);
-    }
-
-    console.log('Data inserted successfully');
-    res.json({ message: 'File uploaded and parsed successfully!', tableName });
+    console.log('Data inserted or updated successfully');
+    res.json({ message: 'File uploaded and processed successfully!' });
     fs.unlinkSync(uploadedFile.path);
   } catch (error) {
-    console.error('Error uploading or parsing file:', error);
-    res.status(500).send('Error processing uploaded file'); 
+    console.error('Error uploading or processing file:', error);
+    res.status(500).send('Error processing uploaded file');
   }
 });
 
+app.get('/tabledata/:tableName', async (req, res) => {
+  const { tableName } = req.params;
 
+  if (!/^[a-zA-Z0-9_]+$/.test(tableName)) {
+    return res.status(400).send('Invalid table name.');
+  }
 
-
+  try {
+    const [rows] = await db.promise().query(`SELECT * FROM user`);
+    res.json(rows);
+  } catch (error) {
+    console.error('Error fetching table data:', error);
+    res.status(500).send('Error fetching table data');
+  }
+});
 
 const port = 4000;
 app.listen(port, () => console.log(`Server listening on port ${port}`));

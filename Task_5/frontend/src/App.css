@@ -1,30 +1,38 @@
+/* Body styles */
 body {
   background-color: #a9ccfa;
 }
 
+/* App styles */
 .App {
-  display: flex;
+  
   justify-content: center;
   align-items: center;
   height: 100vh;
 }
 
+/* Container styles */
 .container {
   background-color: #ffffff;
   padding: 40px;
   border-radius: 10px;
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
   text-align: center;
-  max-width: 500px;
+  max-width: 800px; /* Increased width for better table display */
   width: 100%;
+  margin-right: auto;
+  margin-left: auto;
+  
 }
 
+/* Heading styles */
 h1 {
   margin-bottom: 30px;
   font-size: 28px;
   color: #333333;
 }
 
+/* File input styles */
 .file-input-container {
   display: flex;
   justify-content: center;
@@ -39,6 +47,7 @@ h1 {
   color: #555555;
 }
 
+/* Upload button styles */
 .upload-btn {
   padding: 12px 24px;
   background-color: #4caf50;
@@ -55,28 +64,23 @@ h1 {
   background-color: #45a049;
 }
 
+/* Error message styles */
 .error-message {
   color: #ff0000;
   margin-top: 20px;
   font-size: 16px;
 }
 
+/* Success message container styles */
 .success-container {
   margin-top: 30px;
 }
 
+/* Success message styles */
 .success-message {
   color: #4caf50;
   font-weight: bold;
   font-size: 18px;
-}
-
-.uploaded-image {
-  max-width: 100%;
-  height: auto;
-  margin-top: 20px;
-  border-radius: 5px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
 /* Button-64 styles */
@@ -127,4 +131,53 @@ h1 {
     font-size: 24px;
     min-width: 196px;
   }
+}
+
+/* Table container styles */
+.table-container {
+  margin-top: 10px;
+  overflow-x: auto;
+}
+
+/* Data table styles */
+.data-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+.data-table th,
+.data-table td {
+  border: 1px solid #dddddd;
+  text-align: left;
+  padding: 8px;
+}
+
+.data-table th {
+  background-color: #f2f2f2;
+}
+
+.data-table tbody tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+.data-table tbody tr:hover {
+  background-color: #f1f1f1;
+}
+
+.data-table th,
+.data-table td {
+  border: 1px solid #e0e0e0;
+  padding: 10px;
+  text-align: center;
+}
+
+.data-table th {
+  background-color: #007bff;
+  color: white;
+}
+
+.data-table td {
+  font-size: 14px;
+  color: #333333;
 }
