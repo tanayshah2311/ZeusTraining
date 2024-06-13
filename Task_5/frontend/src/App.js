@@ -1,11 +1,19 @@
 import './App.css';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import Pagination from './Components/pagination';
 
 function App() {
   const [file, setFile] = useState(null);
   const [error, setError] = useState(null);
   const [tableData, setTableData] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
+  const [search, setSearch] = useState('');
+  const [searchBy, setSearchBy] = useState('Name');
+  const [sort, setSort] = useState('Name');
+  const [order, setOrder] = useState('ASC');
+  const pageSize = 10;
 
   function handleChange(event) {
     setFile(event.target.files[0]);
@@ -27,23 +35,63 @@ function App() {
       },
     })
       .then((response) => {
-        alert(response.data.message); 
-        fetchTableData(); // Fetch table data after upload
+        alert(response.data.message);
+        fetchTableData(1);
       })
       .catch((error) => {
         console.error('Error uploading file: ', error);
-        setError(error.message); // Set error state for display
+        setError(error.message);
       });
   }
 
-  const fetchTableData = async () => {
+  const fetchTableData = async (page) => {
     try {
-      const response = await axios.get('http://localhost:4000/tabledata/user');
-      setTableData(response.data);
+      const response = await axios.get(`http://localhost:4000/tabledata/user`, {
+        params: {
+          page,
+          pageSize,
+          search,
+          searchBy,
+          sort,
+          order,
+        },
+      });
+      setTableData(response.data.data);
+      setCurrentPage(response.data.currentPage);
+      setTotalPages(response.data.totalPages);
     } catch (error) {
       console.error('Error fetching table data:', error);
     }
   };
+
+  const handlePageChange = (pageNumber) => {
+    fetchTableData(pageNumber);
+  };
+
+  const handleSearchChange = (e) => {
+    setSearch(e.target.value);
+  };
+
+  const handleSearchByChange = (e) => {
+    setSearchBy(e.target.value);
+  };
+
+  const handleSortChange = (e) => {
+    setSort(e.target.value);
+  };
+
+  const handleOrderChange = (e) => {
+    setOrder(e.target.value);
+  };
+
+  const handleSearchSubmit = (e) => {
+    e.preventDefault();
+    fetchTableData(1);
+  };
+
+  useEffect(() => {
+    fetchTableData(1);
+  }, []);
 
   return (
     <div className="App">
@@ -66,32 +114,62 @@ function App() {
         </form>
         
         {error && <p className="error-message">Error uploading file: {error}</p>}
+
         {tableData.length > 0 && (
           <div className="table-container">
-            <h2>Uploaded Data</h2>
+            <h2>Table Data</h2>
+            <div className="search-sort-container">
+              <form onSubmit={handleSearchSubmit}>
+                <input
+                  type="text"
+                  value={search}
+                  onChange={handleSearchChange}
+                  placeholder="Search..."
+                />
+                <select value={searchBy} onChange={handleSearchByChange}>
+                  <option value="Name">Name</option>
+                  <option value="Email">Email</option>
+                  <option value="Contact">Contact</option>
+                </select>
+                <h5>Sort</h5>
+                <select value={sort} onChange={handleSortChange} className='so'>
+                  <option value="Name">Name</option>
+                  <option value="Email">Email</option>
+                  <option value="Contact">Contact</option>
+                </select>
+                <select value={order} onChange={handleOrderChange} className='os'>
+                  <option value="ASC">A-Z</option>
+                  <option value="DESC">Z-A</option>
+                </select>
+                <button type="submit">Search</button>
+              </form>
+            </div>
             <table className="data-table">
               <thead>
                 <tr>
-                  {Object.keys(tableData[0]).map((key) => (
-                    <th key={key}>{key}</th>
+                  {['Name', 'Email', 'Contact'].map((key, index) => (
+                    <th key={index}>{key}</th>
                   ))}
                 </tr>
               </thead>
               <tbody>
-                {tableData.map((row, index) => (
+                {tableData.map((rowData, index) => (
                   <tr key={index}>
-                    {Object.values(row).map((value, i) => (
-                      <td key={i}>{value}</td>
-                    ))}
+                    <td>{rowData.Name}</td>
+                    <td>{rowData.Email}</td>
+                    <td>{rowData.Contact}</td>
                   </tr>
                 ))}
               </tbody>
             </table>
+            <Pagination
+              currentPage={currentPage}
+              totalPages={totalPages}
+              onPageChange={handlePageChange}
+            />
           </div>
         )}
-        
       </div>
-      
     </div>
   );
 }
