@@ -1,13 +1,7 @@
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using InfoCSV.Data;
 using InfoCSV.Models;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace InfoCSV.Controllers
 {
@@ -187,7 +181,7 @@ namespace InfoCSV.Controllers
 
             if (usersToInsert.Any())
             {
-                await _context.Users.BulkInsertAsync(usersToInsert);
+                await _context.Users.BulkInsertOptimizedAsync(usersToInsert);
             }
 
             await _context.SaveChangesAsync();
