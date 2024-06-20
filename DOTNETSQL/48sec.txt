@@ -1,0 +1,160 @@
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using InfoCSV.Data;
+using InfoCSV.Models;
+using InfoCSV.Services;
+
+namespace InfoCSV.Controllers
+{
+    [Route("api/[controller]")]
+    [ApiController]
+    public class UsersController : ControllerBase
+    {
+        private readonly AppDbContext _context;
+
+        private readonly UsersService _usersService;
+
+
+        public UsersController(UsersService usersService, AppDbContext context)
+        {
+            _context = context;
+            _usersService = usersService;
+        }
+
+      
+
+
+        [HttpGet]
+        public async Task<ActionResult<IEnumerable<User>>> GetUsers()
+        {
+            return await _context.Users.ToListAsync();
+        }
+
+        [HttpGet("{id}")]
+        public async Task<ActionResult<User>> GetUser(int id)
+        {
+            var user = await _context.Users.FindAsync(id);
+
+            if (user == null)
+            {
+                return NotFound();
+            }
+
+            return user;
+        }
+
+        
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteUser(int id)
+        {
+            var user = await _context.Users.FindAsync(id);
+            if (user == null)
+            {
+                return NotFound();
+            }
+
+            _context.Users.Remove(user);
+            await _context.SaveChangesAsync();
+
+            return NoContent();
+        }
+
+        [HttpPost("/api/users/upload")]
+        public async Task<IActionResult> UploadUsers(IFormFile file)
+        {
+            if (file == null || file.Length == 0)
+            {
+                return BadRequest("No file uploaded");
+            }
+
+            if (!file.ContentType.Equals("text/csv") && !file.ContentType.Equals("application/vnd.ms-excel"))
+            {
+                return BadRequest("Unsupported file type. Expected CSV.");
+            }
+
+            List<User> users = new List<User>();
+            int batchSize = 100000;
+            int totalRecords = 0;
+
+            try
+            {
+                using (var reader = new StreamReader(file.OpenReadStream()))
+                {
+                    var headerLine = await reader.ReadLineAsync();
+
+                    while (reader.Peek() >= 0)
+                    {
+                        var line = await reader.ReadLineAsync();
+                        if (!string.IsNullOrWhiteSpace(line))
+                        {
+                            var values = line.Split(',');
+
+                            if (values.Length < 14)
+                            {
+                                continue;
+                            }
+
+                            DateOnly? dateOfBirth = null;
+                            if (DateOnly.TryParse(values[8], out DateOnly parsedDate))
+                            {
+                                dateOfBirth = parsedDate;
+                            }
+
+                            var user = new User
+                            {
+                                email_id = values[0],
+                                name = values[1],
+                                telephone_number = values[2],
+                                country = values[3],
+                                state = values[4],
+                                city = values[5],
+                                address_line_1 = values[6],
+                                address_line_2 = values[7],
+                                date_of_birth = dateOfBirth,
+                                gross_salary_FY2019_20 = decimal.TryParse(values[9], out decimal gs2019_20) ? gs2019_20 : 0,
+                                gross_salary_FY2020_21 = decimal.TryParse(values[10], out decimal gs2020_21) ? gs2020_21 : 0,
+                                gross_salary_FY2021_22 = decimal.TryParse(values[11], out decimal gs2021_22) ? gs2021_22 : 0,
+                                gross_salary_FY2022_23 = decimal.TryParse(values[12], out decimal gs2022_23) ? gs2022_23 : 0,
+                                gross_salary_FY2023_24 = decimal.TryParse(values[13], out decimal gs2023_24) ? gs2023_24 : 0,
+                            };
+
+                            users.Add(user);
+                            totalRecords++;
+
+                            if (users.Count >= batchSize)
+                            {
+                                await _usersService.BulkInsertUsersAsync(users);
+                                await _context.SaveChangesAsync();
+                                users.Clear();
+                            }
+                        }
+                    }
+
+                    if (users.Count > 0)
+                    {
+                        await _usersService.BulkInsertUsersAsync(users);
+                        await _context.SaveChangesAsync();
+                    }
+                }
+
+                return Ok(new { TotalRecords = totalRecords });
+ 
+
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, $"Database error: {ex.Message}");
+            }
+        }
+
+        private bool UserExists(int id)
+        {
+            return _context.Users.Any(e => e.Id == id);
+        }
+    }
+}
+
+
+
+5:44

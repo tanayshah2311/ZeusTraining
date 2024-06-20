@@ -1,0 +1,11 @@
+{
+  "Version": 1,
+  "Hash": "X6ImoKaVQTXu8bJaFdJ6NsZaNqbjFWNQVDOtXVje2Dg=",
+  "Source": "ASPNET_PIZZA_APP",
+  "BasePath": "_content/ASPNET_PIZZA_APP",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": []
+}

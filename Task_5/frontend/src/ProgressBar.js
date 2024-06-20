@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+/*import React, { useEffect, useState } from 'react';
 import './ProgressBar.css';
 
 const ProgressBar = ({ progress }) => {
@@ -23,6 +23,19 @@ const ProgressBar = ({ progress }) => {
       <div className="progress" style={{ width: `${width}%` }}>
         {width}%
       </div>
+    </div>
+  );
+};
+
+export default ProgressBar;
+*/
+import React from 'react';
+
+const ProgressBar = ({ progress }) => {
+  return (
+    <div>
+      <label htmlFor="progress-bar">Upload Progress: {progress}%</label>
+      <progress id="progress-bar" value={progress} max="100" />
     </div>
   );
 };

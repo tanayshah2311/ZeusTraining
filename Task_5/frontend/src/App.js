@@ -2,6 +2,7 @@ import './App.css';
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import Pagination from './Components/pagination';
+import ProgressBar from './ProgressBar';
 
 function App() {
   const [file, setFile] = useState(null);
@@ -13,6 +14,7 @@ function App() {
   const [searchBy, setSearchBy] = useState('Name');
   const [sort, setSort] = useState('Name');
   const [order, setOrder] = useState('ASC');
+  const [uploadProgress, setUploadProgress] = useState(0);
   const pageSize = 10;
 
   function handleChange(event) {
@@ -33,14 +35,21 @@ function App() {
       headers: {
         'Content-Type': 'multipart/form-data',
       },
+      onUploadProgress: (progressEvent) => {
+        const percentCompleted = Math.round((progressEvent.loaded * 100) / progressEvent.total);
+        console.log(`Uploaded ${progressEvent.loaded} bytes of ${progressEvent.total} bytes (${percentCompleted}%)`);
+        setUploadProgress(percentCompleted);
+      },
     })
       .then((response) => {
         alert(response.data.message);
+        setUploadProgress(0);
         fetchTableData(1);
       })
       .catch((error) => {
         console.error('Error uploading file: ', error);
         setError(error.message);
+        setUploadProgress(0);
       });
   }
 
@@ -112,6 +121,8 @@ function App() {
           </div>
           <button type="submit" className="upload-btn">Upload</button>
         </form>
+
+        {uploadProgress > 0 && <ProgressBar progress={uploadProgress} />}
         
         {error && <p className="error-message">Error uploading file: {error}</p>}
 

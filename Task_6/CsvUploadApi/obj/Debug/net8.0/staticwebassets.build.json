@@ -1,0 +1,11 @@
+{
+  "Version": 1,
+  "Hash": "acwzbtP+Gax1eUU8ZCKh5abrM9qBXqBXuw+k0Z0fj/0=",
+  "Source": "CsvUploadApi",
+  "BasePath": "_content/CsvUploadApi",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": []
+}

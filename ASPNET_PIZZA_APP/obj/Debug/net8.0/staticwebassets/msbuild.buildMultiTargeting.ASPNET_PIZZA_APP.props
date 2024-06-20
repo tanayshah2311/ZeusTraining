@@ -1,0 +1,3 @@
+﻿<Project>
+  <Import Project="..\build\ASPNET_PIZZA_APP.props" />
+</Project>
