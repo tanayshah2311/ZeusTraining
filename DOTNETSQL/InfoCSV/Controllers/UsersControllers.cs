@@ -1,7 +1,9 @@
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using InfoCSV.Data;
-using InfoCSV.Models;
+using MySql.Data.MySqlClient;
+using System.Data;
+using System.Text;
+using CsvHelper;
+using CsvHelper.Configuration;
 
 namespace InfoCSV.Controllers
 {
@@ -9,19 +11,137 @@ namespace InfoCSV.Controllers
     [ApiController]
     public class UsersController : ControllerBase
     {
-        private readonly AppDbContext _context;
+        private readonly string _connectionString;
+        private const int BatchSize = 10000;
 
-        public UsersController(AppDbContext context)
+        public UsersController(MySqlConnection connection)
         {
-            _context = context;
+            _connectionString = connection.ConnectionString;
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<User>>> GetUsers()
+        public IActionResult TestDatabaseConnection()
         {
-            return await _context.Users.ToListAsync();
+            try
+            {
+                using (var connection = new MySqlConnection(_connectionString))
+                {
+                    connection.Open();
+                    connection.Close();
+                }
+                return Ok("Database connection test successful.");
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Database connection error: {ex.Message}");
+            }
         }
 
+        [HttpPost("upload")]
+        public async Task<IActionResult> UploadCsv(IFormFile file)
+        {
+            if (file == null || file.Length == 0)
+            {
+                return BadRequest("No file uploaded.");
+            }
+
+            try
+            {
+                var dataTable = new DataTable();
+                using (var reader = new StreamReader(file.OpenReadStream()))
+                using (var csv = new CsvReader(reader, new CsvConfiguration(System.Globalization.CultureInfo.CurrentCulture)))
+                {
+                    using (var dr = new CsvDataReader(csv))
+                    {
+                        dataTable.Load(dr);
+                    }
+                }
+
+                await BulkInsertAsync(dataTable);
+                return Ok("Data uploaded successfully.");
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Internal server error: {ex.Message}");
+            }
+        }
+
+        private async Task BulkInsertAsync(DataTable dataTable)
+        {
+            using (var connection = new MySqlConnection(_connectionString))
+            {
+                await connection.OpenAsync();
+
+                using (var transaction = await connection.BeginTransactionAsync())
+                {
+                    try
+                    {
+                        var columns = string.Join(",", dataTable.Columns.Cast<DataColumn>().Select(c => c.ColumnName));
+                        var updateColumns = string.Join(",", dataTable.Columns.Cast<DataColumn>().Select(c => $"{c.ColumnName}=VALUES({c.ColumnName})"));
+
+                        var batchSize = BatchSize;
+                        var totalRows = dataTable.Rows.Count;
+
+                        for (int i = 0; i < totalRows; i += batchSize)
+                        {
+                            var batchRows = dataTable.AsEnumerable().Skip(i).Take(batchSize);
+                            var valuesList = new StringBuilder();
+
+                            foreach (var row in batchRows)
+                            {
+                                var values = string.Join(",", dataTable.Columns.Cast<DataColumn>().Select(c => $"'{MySqlHelper.EscapeString(row[c].ToString())}'"));
+                                valuesList.Append($"({values}),");
+                            }
+
+                            if (valuesList.Length > 0)
+                            {
+                                valuesList.Length--;
+                                var commandText = $"INSERT INTO users ({columns}) VALUES {valuesList} ON DUPLICATE KEY UPDATE {updateColumns};";
+
+                                using (var cmd = new MySqlCommand(commandText, connection, (MySqlTransaction)transaction))
+                                {
+                                    await cmd.ExecuteNonQueryAsync();
+                                }
+                            }
+                        }
+
+                        await transaction.CommitAsync();
+                    }
+                    catch (Exception)
+                    {
+                        await transaction.RollbackAsync();
+                        throw;
+                    }
+                }
+            }
+        }
+    }
+}
+
+
+
+
+
+
+       
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*
         [HttpGet("{id}")]
         public async Task<ActionResult<User>> GetUser(int id)
         {
@@ -74,7 +194,7 @@ namespace InfoCSV.Controllers
                 {
                     var headerLine = await reader.ReadLineAsync();
 
-                    var existingUsers = await _context.Users.ToDictionaryAsync(u => u.email_id); 
+                    var existingUsers = await _context.Users.ToDictionaryAsync(u => u.email_id);
 
                     var usersToUpdate = new List<User>();
                     var usersToInsert = new List<User>();
@@ -176,15 +296,15 @@ namespace InfoCSV.Controllers
         {
             if (usersToUpdate.Any())
             {
-                _context.Users.UpdateRange(usersToUpdate);
+                _context.Users.BulkUpdate(usersToUpdate);
             }
 
             if (usersToInsert.Any())
             {
-                await _context.Users.BulkInsertOptimizedAsync(usersToInsert);
+                await _context.Users.BulkInsertAsync(usersToInsert);
             }
 
-            await _context.SaveChangesAsync();
+            //await _context.BulkSaveChangesAsync();
         }
 
         private bool UserExists(int id)
@@ -193,3 +313,4 @@ namespace InfoCSV.Controllers
         }
     }
 }
+*/

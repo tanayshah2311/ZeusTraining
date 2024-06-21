@@ -18,7 +18,6 @@ namespace InfoCSV.Data
             {
                 entity.HasKey(e => e.Id);
                 entity.Property(e => e.Id).ValueGeneratedOnAdd(); 
-                //new
                 entity.HasIndex(e => e.email_id).IsUnique();
                 entity.HasAlternateKey(e => e.email_id);
             });

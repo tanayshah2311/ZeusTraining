@@ -1,15 +1,18 @@
-using InfoCSV.Data;
-using InfoCSV.Services;
-using Microsoft.EntityFrameworkCore;
+//using InfoCSV.Data;
+// using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
+using MySql.Data.MySqlClient;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
-builder.Services.AddDbContext<AppDbContext>(options =>
-    options.UseMySql(builder.Configuration.GetConnectionString("DefaultConnection"),
-    new MySqlServerVersion(new Version(8, 0, 25))));
-builder.Services.AddScoped<UsersService>();
+
+string? connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+builder.Services.AddSingleton<MySqlConnection>(new MySqlConnection(connectionString));
+
+// builder.Services.AddDbContext<AppDbContext>(options =>
+//     options.UseMySql(builder.Configuration.GetConnectionString("DefaultConnection"),
+//     new MySqlServerVersion(new Version(8, 0, 25))));
 
 
 builder.Services.AddSwaggerGen(c =>

@@ -4,7 +4,7 @@ namespace InfoCSV.Models
 {
     public int Id { get; set; }
 
-    public string email_id { get; set; }
+    public string? email_id { get; set; }
     public string? name { get; set; }
     public string? telephone_number { get; set; }
     public string? country { get; set; }
